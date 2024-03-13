@@ -1,21 +1,21 @@
-import { authMiddleware } from "@clerk/nextjs"
+import { type NextRequest, NextResponse } from "next/server";
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs"
+import { updateSession } from "@/utils/supabase/middleware"
 
-export default authMiddleware({})
-
-/* export default authMiddleware({
-  // Routes that can be accessed while signed out
-  publicRoutes: ['/anyone-can-visit-this-route'],
-  // Routes that can always be accessed, and have
-  // no authentication information
-  ignoredRoutes: ['/no-auth-in-this-route'],
-});
-*/
-export const config = {
-	//   // Protects all routes, including api/trpc.
-	//   // See https://clerk.com/docs/references/nextjs/auth-middleware
-	//   // for more information about configuring your Middleware
-	matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
-	// handler: async (req, res) => {
-	// 	//...
-	// },
+export async function middleware(request: NextRequest) {
+  return await updateSession(request);
 }
+
+// export const config = {
+//   matcher: [
+//     /*
+//      * Match all request paths except:
+//      * - _next/static (static files)
+//      * - _next/image (image optimization files)
+//      * - favicon.ico (favicon file)
+//      * - images - .svg, .png, .jpg, .jpeg, .gif, .webp
+//      * Feel free to modify this pattern to include more paths.
+//      */
+//     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+//   ],
+// };
