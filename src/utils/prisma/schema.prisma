@@ -35,6 +35,8 @@ model Form {
 
   shareURL      String          @default(uuid())
   FormSubmissions FormSubmissions[]
+
+  @@unique([name, userId])
 }
 
 model FormSubmissions {
@@ -44,3 +46,5 @@ model FormSubmissions {
   form            Form          @relation(fields: [formId], references: [id])
   content String
 }
+
+// npx prisma migrate dev --name init

@@ -14,3 +14,4 @@ This is an app that allows me to create forms for various use cases quickly whil
 -   Vercel
 -   ShadCn
 -   Supabase
+-   Zod
