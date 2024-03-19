@@ -5,7 +5,12 @@ import { Inter } from "next/font/google"
 import "../globals.css"
 import { ThemeProvider } from "@/components/providers/ThemeProviders"
 import Document, { Html, Head, Main, NextScript } from "next/document"
+// import "../node_modules/highlight.js/styles/stackoverflow-light.css"
 import { Toaster } from "@/components/ui/toaster"
+import {
+	DesignerContext,
+	DesignerContextProvider,
+} from "../context/DesignerContext"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -25,16 +30,19 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 			<html lang="en" suppressHydrationWarning>
 				<head />
 				<body className="bg-background text-foreground">
-					<ThemeProvider
-						attribute="class"
-						defaultTheme="system"
-						enableSystem={true}
-						disableTransitionOnChange={true}>
-						<main className="min-h-screen flex flex-col items-center justify-center">
-							{children}
-						</main>
-						<Toaster />
-					</ThemeProvider>
+					<DesignerContextProvider>
+						<ThemeProvider
+							attribute="class"
+							defaultTheme="system"
+							enableSystem={true}
+							disableTransitionOnChange={true}>
+							<main className="min-h-screen flex flex-col items-center justify-center">
+								{children}
+							</main>
+							<div id="codePortal" />
+							<Toaster />
+						</ThemeProvider>
+					</DesignerContextProvider>
 				</body>
 			</html>
 		</ClerkProvider>

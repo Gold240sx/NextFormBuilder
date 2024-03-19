@@ -3,10 +3,12 @@ import Navbar from "@/components/navbar"
 
 const layout = ({ children }: { children: ReactNode }) => {
 	return (
-		<div className="flex w-full flex-grow flex-col mx-auto ">
+		<main className="flex w-full flex-grow flex-col mx-auto ">
 			<Navbar />
-			{children}
-		</div>
+			<section className="flex flex-grow h-full justify-center">
+				{children}
+			</section>
+		</main>
 	)
 }
 
