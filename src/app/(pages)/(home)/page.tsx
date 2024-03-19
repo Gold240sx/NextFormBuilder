@@ -6,11 +6,11 @@ import { NextPage } from "next"
 import { SignedIn, ClerkProvider } from "@clerk/nextjs"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { AppProps } from "next/app"
+// import { AppProps } from "next/app"
 import ClerkIsSignedInComponent from "@/components/ClerkIsSignedInComponent"
 import { auth, clerkClient } from "@clerk/nextjs"
 
-const Home = async ({ Component, pageProps }: AppProps) => {
+const Home: NextPage = async () => {
 	const { userId } = auth()
 	if (!userId) {
 		return
@@ -19,19 +19,9 @@ const Home = async ({ Component, pageProps }: AppProps) => {
 
 	return (
 		<section className="h-full flex items-center justify-center">
-			{/* <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm text-white">
-				<SignedIn>
-					<Link href="/dashboard">
-						<Button asChild>Go to Dashkoard</Button>
-					</Link>
-				</SignedIn>
-				{/* <DeployButton />
-			</div> */}
-
 			<div className="flex flex-col gap-20 max-w-4xl px-3">
 				{/* <Header /> */}
 
-				{/* <ClerkIsSignedInComponent> */}
 				{user && (
 					<Link
 						href="/dashboard"
@@ -48,7 +38,6 @@ const Home = async ({ Component, pageProps }: AppProps) => {
 						<Button asChild>Sign In / Register</Button>
 					</Link>
 				)}
-				{/* </ClerkIsSignedInComponent> */}
 			</div>
 		</section>
 	)
