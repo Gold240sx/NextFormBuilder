@@ -6,7 +6,13 @@ import SaveFormButton from "@/components/buttons/SaveFormButton"
 import DragOverlayWrapper from "@/components/DragOverlayWrapper"
 import Designer from "@/components/Designer"
 import React, { useLayoutEffect, useState } from "react"
-import { DndContext } from "@dnd-kit/core"
+import {
+	DndContext,
+	MouseSensor,
+	useSensor,
+	useSensors,
+	TouchSensor,
+} from "@dnd-kit/core"
 import ViewCodeButton from "./buttons/ViewCodeButton"
 import { BiCodeAlt } from "react-icons/bi"
 import CodePortal from "./codePortal"
@@ -17,6 +23,7 @@ import { TextFieldElementsCode } from "./fields/CodeLibElements/TextFieldElement
 import { CodeLib } from "./fields/CodeLib"
 import { FormElementInstance } from "./FormElements"
 import { set } from "date-fns"
+import { useForm } from "react-hook-form"
 
 const FormBuilder = ({ form }: { form: Form }) => {
 	const [showPortal, setShowPortal] = useState(false)
@@ -24,6 +31,7 @@ const FormBuilder = ({ form }: { form: Form }) => {
 	const [formattedCode, setFormattedCode] = useState<string>("")
 	const [dynamicCode, setDynamicCode] = useState(false)
 	const [dynamicImports, setDynamicImports] = useState<string[]>([])
+
 	const { toast } = useToast()
 
 	useLayoutEffect(() => {
@@ -75,8 +83,23 @@ const FormBuilder = ({ form }: { form: Form }) => {
 		})
 	}
 
+	const mouseSensor = useSensor(MouseSensor, {
+		activationConstraint: {
+			distance: 10, // 10px tolerance to define a drag (less than 10 is a click),
+		},
+	})
+
+	const touchSensor = useSensor(TouchSensor, {
+		activationConstraint: {
+			delay: 300, // 250ms hold to define a drag
+			tolerance: 5, // 10px tolerance to define a drag (less than 10 is a click)
+		},
+	})
+
+	const sensors = useSensors(mouseSensor, touchSensor)
+
 	return (
-		<DndContext>
+		<DndContext id="builder-dnd" sensors={sensors}>
 			<main className="flex flex-col w-full">
 				<header className="flex justify-between border-b-2 p-4 gap-3 items-center">
 					<h2 className="truncate font-medium">

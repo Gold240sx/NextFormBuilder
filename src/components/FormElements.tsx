@@ -6,15 +6,16 @@ export type ElementsType = "TextField"
 export type FormElement = {
 	type: ElementsType
 
-	constructs: (id: string) => FormElementInstance
+	construct: (id: string) => FormElementInstance
 
 	designerButtonElement: {
 		icon: ReactElement | SetConstructor
 		label: string
+		extraAttributes: Record<string, any>
 	}
 	designerComponent: FC<{ elementInstance: FormElementInstance }>
-	formComponent: FC
-	propertiesComponent: FC
+	formComponent: FC<{ elementInstance: FormElementInstance }>
+	propertiesComponent: FC<{ elementInstance: FormElementInstance }>
 }
 
 type FormElementsType = {

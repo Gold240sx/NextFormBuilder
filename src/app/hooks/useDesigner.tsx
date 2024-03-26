@@ -1,6 +1,7 @@
 "use client"
 import React, { useContext } from "react"
 import { DesignerContext } from "@/app/context/DesignerContext"
+import { useFormattedCode } from "@/app/context/FormattedCodeContext"
 
 const useDesigner = () => {
 	const context = useContext(DesignerContext)

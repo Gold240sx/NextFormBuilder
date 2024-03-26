@@ -13,7 +13,7 @@ const ViewCodeButton = ({
 	return (
 		<button
 			onClick={handleModal}
-			disabled={formattedCode === ""}
+			// disabled={formattedCode === ""}
 			className={`${
 				formattedCode === ""
 					? "bg-zinc-500 text-muted-foreground cursor-not-allowed "

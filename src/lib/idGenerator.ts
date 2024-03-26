@@ -1,7 +1,9 @@
 import React from "react";
 
-const IdGenerator = () => {
-  return Math.floor(Math.random() * 1001).toString();
+const idGenerator = (): string => {
+  const id = Math.floor(Math.random() * 10001).toString();
+
+  return id;
 };
 
-export default IdGenerator;
+export default idGenerator;

@@ -22,18 +22,18 @@ const CodePreviewer = ({
 
 	useEffect(() => {
 		function process(string: string) {
-			let lines = string.split("\n");
-			let indentation: string | RegExp | null = null;
+			let lines = string.split("\n")
+			let indentation: string | RegExp | null = null
 
-			if (lines[0] === "") lines.shift();
-			const matches = /^[\s\t]+/.exec(lines[0]);
-			if (matches) indentation = matches[0];
+			if (lines[0] === "") lines.shift()
+			const matches = /^[\s\t]+/.exec(lines[0])
+			if (matches) indentation = matches[0]
 			if (indentation) {
 				lines = lines.map(function (line) {
 					return line
 						.replace(indentation || "", "")
-						.replace(/\t/g, "    ");
-				});
+						.replace(/\t/g, "    ")
+				})
 			}
 
 			// Wrap existing code with a <></> fragment
@@ -41,7 +41,7 @@ const CodePreviewer = ({
 			lines.unshift("<>")
 			lines.push("</>")
 
-			return indentation ? lines.join("\n").trim() : string;
+			return indentation ? lines.join("\n").trim() : string
 		}
 		setFinalCode(process(formattedCode))
 	}, [formattedCode, dynamicCode])
@@ -57,16 +57,16 @@ const CodePreviewer = ({
 			<div
 				id="code-preview-body"
 				onClick={(e) => e.stopPropagation()}
-				className="bg-gradient-to-r relative overflow-y-scroll  mt-16 mx-auto w-full max-h-screen from-indigo-500 to-sky-500 text-primary rounded-lg p-0.5 shadow-2xl dark:shadow-teal-400/40">
+				className=" relative overflow-y-scroll  mt-16 mx-auto w-full max-h-screen from-indigo-500 to-sky-500 text-primary rounded-lg p-0.5 shadow-2xl dark:shadow-teal-400/40">
 				<div className="flex flex-col items-start relative h-full w-full bg-background rounded-md justify-center gap-8 px-4 pt-[.4rem] pb-4">
 					<div className="bg-[url(/QR-bg.svg)] dark:bg-[url(/QR-bg-dark.svg)] absolute top-0 left-0 w-full h-full bg-center z-0 opacity-5"></div>
 					<div className="flex-col md:flex-row z-10 flex justify-between w-full text-2xl md:text-4xl text-zinc-400 dark:text-primary">
-							<div className="bg-gradient-to-r to-indigo-300 from-sky-400  mt-4 p-0.5 rounded-lg">
-								<div className="bg-background rounded-md">						
-									<h4 className="flex gap-4 items-center bg-gradient-to-r from-indigo-500/50 to-sky-500/50 p-4 py-2 rounded-md pr-8">
-										<BiCodeAlt className="text-sky-400 mt-0.5" />
-										<span>Form Code Output</span>
-									</h4>
+						<div className="bg-gradient-to-r to-indigo-300 from-sky-400  mt-4 p-0.5 rounded-lg">
+							<div className="bg-background rounded-md">
+								<h4 className="flex gap-4 items-center bg-gradient-to-r from-indigo-500/50 to-sky-500/50 p-4 py-2 rounded-md pr-8">
+									<BiCodeAlt className="text-sky-400 mt-0.5" />
+									<span>Form Code Output</span>
+								</h4>
 							</div>
 						</div>
 						<div className="flex gap-4 items-center ml-auto mt-2 md:mt-5">
@@ -105,7 +105,9 @@ const CodePreviewer = ({
 					{dynamicCode && (
 						<div className="w-full flex flex-col gap-2">
 							<div className="flex justify-between w-full z-10">
-								<h2 className="text-2xl">Dynamic Values Used:</h2>
+								<h2 className="text-2xl">
+									Dynamic Values Used:
+								</h2>
 								<button
 									onClick={copyImports}
 									className="border-2 rounded-md text-sm px-1 border-muted-foreground py-1 text-muted-foreground cursor-pointer hover:text-primary hover:border-primary hover:bg-zinc-800">
@@ -115,31 +117,42 @@ const CodePreviewer = ({
 							<div
 								id="code-preview-textarea"
 								className="w-full h-full rounded-md  z-10 overflow-x-scroll bg-[#282C33] p-4 text-teal-600 flex whitespace-nowrap">
-									<p className="text-fuchsia-500">const &nbsp;</p>
-									<p>&#123; &nbsp;</p>
-									{/* make only the commas in white text */}
-									{dynamicImports.map((item, index) => (
-										<div key={index} className="flex">
-											<span className="text-teal-300">{item}</span>
-											{ index !== dynamicImports.length - 1 && <span className="text-white pr-2 pl-0.5">, </span>}
-										</div>
-									))}
-									<p>&nbsp; &#125;</p>
-									<p className="text-white">&nbsp; = <span className="text-lime-300">item</span>.<span className="text-teal-500">props</span></p>
+								<p className="text-fuchsia-500">const &nbsp;</p>
+								<p>&#123; &nbsp;</p>
+								{/* make only the commas in white text */}
+								{dynamicImports.map((item, index) => (
+									<div key={index} className="flex">
+										<span className="text-teal-300">
+											{item}
+										</span>
+										{index !==
+											dynamicImports.length - 1 && (
+											<span className="text-white pr-2 pl-0.5">
+												,{" "}
+											</span>
+										)}
+									</div>
+								))}
+								<p>&nbsp; &#125;</p>
+								<p className="text-white">
+									&nbsp; ={" "}
+									<span className="text-lime-300">item</span>.
+									<span className="text-teal-500">props</span>
+								</p>
 							</div>
-							</div>
+						</div>
 					)}
-					
-						<div className="w-full flex flex-col gap-2">
-							<div className="flex justify-between w-full z-10">
-									<h2 className="text-2xl">Code</h2>
-									<button
-										onClick={copyCode}
-										className="border-2 rounded-md text-sm px-1 border-muted-foreground text-muted-foreground hover:text-primary py-1 hover:border-primary cursor-pointer hover:bg-zinc-800">
-										<BiCopyAlt className="text-2xl hover:text-primary" />
-									</button>
-								</div>
-							<div
+
+					<div className="w-full flex flex-col gap-2">
+						<div className="flex justify-between w-full z-10">
+							<h2 className="text-2xl">Code</h2>
+							<button
+								onClick={copyCode}
+								className="border-2 rounded-md text-sm px-1 border-muted-foreground text-muted-foreground hover:text-primary py-1 hover:border-primary cursor-pointer hover:bg-zinc-800">
+								<BiCopyAlt className="text-2xl hover:text-primary" />
+							</button>
+						</div>
+						<div
 							id="code-preview-textarea"
 							className="w-full h-full rounded-md  z-10 block overflow-x-auto">
 							<SyntaxHighlighter

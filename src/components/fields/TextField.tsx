@@ -1,10 +1,25 @@
 "use client"
-import React from "react"
+import React, { useEffect } from "react"
 import { ElementsType, FormElement, FormElementInstance } from "../FormElements"
 import { MdTextFields } from "react-icons/md"
 import { Label } from "../ui/label"
 import { Input } from "../ui/input"
+import { Switch } from "../ui/switch"
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import useDesigner from "@/app/hooks/useDesigner"
 const type: ElementsType = "TextField"
+
+import {
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "../ui/form"
 
 const extraAttributes = {
 	label: "Text field",
@@ -41,9 +56,39 @@ const DesignerComponent = ({
 	)
 }
 
+const FormComponent = ({
+	elementInstance,
+}: {
+	elementInstance: FormElementInstance
+}) => {
+	const element = elementInstance as CustomInstance
+	const { label, required, placeHolder, helperText } = element.extraAttributes
+	return (
+		<div className="flex flex-col gap-2 w-full text-white">
+			<Label>
+				{label}
+				{required && "*"}
+			</Label>
+			<Input placeholder={placeHolder} />
+			{helperText && (
+				<p className="text-muted-foreground text-[0.8rem]">
+					{helperText}
+				</p>
+			)}
+		</div>
+	)
+}
+
+const propertiesSchema = z.object({
+	label: z.string().min(2).max(50),
+	required: z.boolean().default(false),
+	helperText: z.string().max(200),
+	placeHolder: z.string().max(50),
+})
+
 export const TextFieldFormElement: FormElement = {
 	type,
-	constructs: (id: string) => {
+	construct: (id: string) => {
 		return {
 			id,
 			type,
@@ -63,10 +108,150 @@ export const TextFieldFormElement: FormElement = {
 		label: "Text Field",
 	},
 	designerComponent: DesignerComponent,
-	formComponent: () => {
-		return <div className="text-white">Form</div>
-	},
-	propertiesComponent: () => {
-		return <div className="text-white">Properties</div>
-	},
+	formComponent: FormComponent,
+	propertiesComponent: PropertiesComponent,
+}
+
+type propertiesFormSchemaType = z.infer<typeof propertiesSchema>
+
+function PropertiesComponent({
+	elementInstance,
+}: {
+	elementInstance: FormElementInstance
+}) {
+	const element = elementInstance as CustomInstance
+	const { updateElement } = useDesigner()
+	const form = useForm<propertiesFormSchemaType>({
+		resolver: zodResolver(propertiesSchema),
+		mode: "onBlur",
+		defaultValues: {
+			label: element.extraAttributes.label,
+			required: element.extraAttributes.required,
+			placeHolder: element.extraAttributes.placeHolder,
+			helperText: element.extraAttributes.helperText,
+		},
+	})
+	useEffect(() => {
+		form.reset(element.extraAttributes)
+	}, [element, form])
+
+	const applyChanges = (values: propertiesFormSchemaType) => {
+		const { label, required, placeHolder, helperText } = values
+
+		updateElement(element.id, {
+			...element,
+			extraAttributes: {
+				label,
+				required,
+				placeHolder,
+				helperText,
+			},
+		})
+	}
+
+	return (
+		<Form {...form}>
+			<form
+				onBlur={() => applyChanges(form.getValues())}
+				onSubmit={(e) => e.preventDefault()}
+				className="space-y-3">
+				<FormField
+					control={form.control}
+					name="label"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Label</FormLabel>
+							<FormControl>
+								<Input
+									{...field}
+									className="focus-visible:ring-sky-500 bg-white dark:bg-black/80"
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											e.currentTarget.blur()
+										}
+									}}
+								/>
+							</FormControl>
+							<FormDescription>
+								The label for the text field ( displayed above
+								the field)
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="placeHolder"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Placeholder</FormLabel>
+							<FormControl>
+								<Input
+									className="focus-visible:ring-sky-500 bg-white dark:bg-black/80"
+									{...field}
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											e.currentTarget.blur()
+										}
+									}}
+								/>
+							</FormControl>
+							<FormDescription>
+								The placeholder for the field ( displayed within
+								the field)
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="helperText"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Helper Text</FormLabel>
+							<FormControl>
+								<Input
+									{...field}
+									className="focus-visible:ring-sky-500 bg-white dark:bg-black/80"
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											e.currentTarget.blur()
+										}
+									}}
+								/>
+							</FormControl>
+							<FormDescription>
+								The Helper Text for the text field ( displayed
+								below the field)
+							</FormDescription>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="required"
+					render={({ field }) => (
+						<FormItem className="flex items-center justify-between rounded-lg border p-3 shadow-sm">
+							<div className="space-y-0.5">
+								<FormLabel>Required</FormLabel>
+								<FormDescription>
+									Set if this form field is required
+								</FormDescription>
+							</div>
+							<FormControl>
+								<Switch
+									checked={field.value}
+									onCheckedChange={field.onChange}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+			</form>
+		</Form>
+	)
 }
