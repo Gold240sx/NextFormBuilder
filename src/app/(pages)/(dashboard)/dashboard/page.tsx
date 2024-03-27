@@ -69,7 +69,7 @@ const Dashboard: NextPage = async () => {
 	)
 }
 
-export function StatsCard({
+export const StatsCard = ({
 	title,
 	value,
 	icon,
@@ -83,7 +83,7 @@ export function StatsCard({
 	className: string
 	loading: boolean
 	icon: ReactNode
-}) {
+}) => {
 	return (
 		<Card className={className}>
 			<CardHeader className="flex flex-row items-center justify-between pb-2">
