@@ -67,7 +67,7 @@ const FormSubmitComponent = ({
 				variant: "destructive",
 			})
 		}
-		console.log(formValues.current)
+		// console.log(formValues.current)
 	}
 
 	if (submitted) {
