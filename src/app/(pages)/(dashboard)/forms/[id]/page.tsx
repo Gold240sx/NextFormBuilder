@@ -2,11 +2,6 @@ import { GetFormById, GetFormWithSubmissions } from "@/actions/form"
 import FormLinkShare from "@/components/buttons/FormLinkShare"
 import VisitBtn from "@/components/buttons/VisitButton"
 import React, { ReactNode } from "react"
-import { StatsCard } from "../page"
-import { LuView } from "react-icons/lu"
-import { FaWpforms } from "react-icons/fa"
-import { HiCursorClick } from "react-icons/hi"
-import { TbArrowBounce } from "react-icons/tb"
 import { ElementsType, FormElementInstance } from "@/components/FormElements"
 import {
 	Table,
@@ -16,9 +11,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table"
-import { format, formatDistance } from "date-fns"
-import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
+import { formatDistance } from "date-fns"
 import CardStatsWrapper from "../../dashboard/CardStatsWrapper"
 
 async function FormDetailsPage({
