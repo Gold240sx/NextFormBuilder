@@ -94,3 +94,88 @@ export const GetFormById = async (id: number) => {
     },
   });
 };
+
+export async function UpdateFormContent(id: number, jsonContent: string) {
+  const user = await currentUser();
+  if (!user) {
+    throw new UserNotFoundErr();
+  }
+
+  return await prisma.form.update({
+    where: {
+      id: id,
+      userId: user.id,
+    },
+    data: {
+      content: jsonContent,
+    },
+  });
+}
+
+export async function PublishForm(id: number) {
+  const user = await currentUser();
+  if (!user) {
+    throw new UserNotFoundErr();
+  }
+
+  return await prisma.form.update({
+    where: {
+      id: id,
+      userId: user.id,
+    },
+    data: {
+      published: true,
+    },
+  });
+}
+
+export async function GetFormWithSubmissions(id: number) {
+  const user = await currentUser();
+  if (!user) {
+    throw new UserNotFoundErr();
+  }
+
+  return await prisma.form.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      FormSubmissions: true,
+    },
+  });
+}
+
+export async function GetFormContentByUrl(formUrl: string) {
+  return await prisma.form.update({
+    select: {
+      content: true,
+    },
+    data: {
+      visits: {
+        increment: 1,
+      },
+    },
+    where: {
+      shareURL: formUrl,
+    },
+  });
+}
+
+export async function SubmitForm(formUrl: string, content: string) {
+  return await prisma.form.update({
+    where: {
+      shareURL: formUrl,
+      published: true,
+    },
+    data: {
+      submissions: {
+        increment: 1,
+      },
+      FormSubmissions: {
+        create: {
+          content: content,
+        },
+      },
+    },
+  });
+}

@@ -1,6 +1,11 @@
 "use client"
-import React, { useEffect } from "react"
-import { ElementsType, FormElement, FormElementInstance } from "../FormElements"
+import React, { useEffect, useState } from "react"
+import {
+	ElementsType,
+	FormElement,
+	FormElementInstance,
+	SubmitFunction,
+} from "../FormElements"
 import { MdTextFields } from "react-icons/md"
 import { Label } from "../ui/label"
 import { Input } from "../ui/input"
@@ -9,6 +14,7 @@ import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import useDesigner from "@/app/hooks/useDesigner"
+import { cn } from "@/lib/utils"
 const type: ElementsType = "TextField"
 
 import {
@@ -20,6 +26,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "../ui/form"
+import { sub } from "date-fns"
 
 const extraAttributes = {
 	label: "Text field",
@@ -58,10 +65,23 @@ const DesignerComponent = ({
 
 const FormComponent = ({
 	elementInstance,
+	submitValue,
+	isInvalid,
+	defaultValue,
 }: {
 	elementInstance: FormElementInstance
+	submitValue?: SubmitFunction
+	isInvalid?: boolean
+	defaultValue?: string
 }) => {
 	const element = elementInstance as CustomInstance
+	const [value, setValue] = useState(defaultValue || "")
+	const [error, setError] = useState(false)
+
+	useEffect(() => {
+		setError(isInvalid === true)
+	}, [isInvalid])
+
 	const { label, required, placeHolder, helperText } = element.extraAttributes
 	return (
 		<div className="flex flex-col gap-2 w-full text-white">
@@ -69,9 +89,30 @@ const FormComponent = ({
 				{label}
 				{required && "*"}
 			</Label>
-			<Input placeholder={placeHolder} />
+			<Label className={cn(error && "border-red-500")}>
+				{error ? "This field is required" : ""}
+			</Label>
+			<Input
+				placeholder={placeHolder}
+				onChange={(e) => setValue(e.target.value)}
+				onBlur={(e) => {
+					if (!submitValue) return
+					const valid = TextFieldFormElement.validate(
+						element,
+						e.target.value
+					)
+					setError(!valid)
+					if (!valid) return
+					submitValue(element.id, e.target.value)
+				}}
+				value={value}
+			/>
 			{helperText && (
-				<p className="text-muted-foreground text-[0.8rem]">
+				<p
+					className={cn(
+						"text-muted-foreground text-[0.8rem]",
+						error && "text-red-500"
+					)}>
 					{helperText}
 				</p>
 			)}
@@ -110,6 +151,16 @@ export const TextFieldFormElement: FormElement = {
 	designerComponent: DesignerComponent,
 	formComponent: FormComponent,
 	propertiesComponent: PropertiesComponent,
+	validate: (
+		formElement: FormElementInstance,
+		currentValue: string
+	): boolean => {
+		const element = formElement as CustomInstance
+		if (element.extraAttributes.required && !currentValue) {
+			return currentValue.length > 0
+		}
+		return true
+	},
 }
 
 type propertiesFormSchemaType = z.infer<typeof propertiesSchema>

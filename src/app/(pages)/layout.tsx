@@ -5,12 +5,12 @@ import { Inter } from "next/font/google"
 import "../globals.css"
 import { ThemeProvider } from "@/components/providers/ThemeProviders"
 import Document, { Html, Head, Main, NextScript } from "next/document"
-// import "../node_modules/highlight.js/styles/stackoverflow-light.css"
 import { Toaster } from "@/components/ui/toaster"
 import {
 	DesignerContext,
 	DesignerContextProvider,
 } from "../context/DesignerContext"
+import NextTopLoader from "nextjs-toploader"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -30,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 			<html lang="en" suppressHydrationWarning>
 				<head />
 				<body className="bg-background text-foreground">
+					<NextTopLoader />
 					<DesignerContextProvider>
 						<ThemeProvider
 							attribute="class"

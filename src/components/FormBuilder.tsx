@@ -5,7 +5,7 @@ import PublishFormButton from "@/components/buttons/PublishFormButton"
 import SaveFormButton from "@/components/buttons/SaveFormButton"
 import DragOverlayWrapper from "@/components/DragOverlayWrapper"
 import Designer from "@/components/Designer"
-import React, { useLayoutEffect, useState } from "react"
+import React, { useEffect, useLayoutEffect, useState } from "react"
 import {
 	DndContext,
 	MouseSensor,
@@ -14,22 +14,26 @@ import {
 	TouchSensor,
 } from "@dnd-kit/core"
 import ViewCodeButton from "./buttons/ViewCodeButton"
-import { BiCodeAlt } from "react-icons/bi"
 import CodePortal from "./codePortal"
 import { useToast } from "@/components/ui/use-toast"
 import useDesigner from "@/app/hooks/useDesigner"
 import CodePreviewer from "./CodePreviewer"
-import { TextFieldElementsCode } from "./fields/CodeLibElements/TextFieldElementsCode"
 import { CodeLib } from "./fields/CodeLib"
 import { FormElementInstance } from "./FormElements"
-import { set } from "date-fns"
-import { useForm } from "react-hook-form"
+import { ImSpinner } from "react-icons/im"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
+import { toast } from "./ui/use-toast"
+import Link from "next/link"
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs"
+import Confetti from "react-confetti"
 
 const FormBuilder = ({ form }: { form: Form }) => {
-	const [showPortal, setShowPortal] = useState(false)
-	const { elements } = useDesigner()
+	const [showPortal, setShowPortal] = useState<boolean>(false)
+	const { elements, setElements } = useDesigner()
+	const [isReady, setIsReady] = useState<boolean>(false)
 	const [formattedCode, setFormattedCode] = useState<string>("")
-	const [dynamicCode, setDynamicCode] = useState(false)
+	const [dynamicCode, setDynamicCode] = useState<boolean>(false)
 	const [dynamicImports, setDynamicImports] = useState<string[]>([])
 
 	const { toast } = useToast()
@@ -98,6 +102,89 @@ const FormBuilder = ({ form }: { form: Form }) => {
 
 	const sensors = useSensors(mouseSensor, touchSensor)
 
+	useEffect(() => {
+		if (isReady) return
+		const elements = JSON.parse(form.content)
+		setElements(elements)
+		const readyTimeout = setTimeout(() => setIsReady(true), 500)
+		return () => clearTimeout(readyTimeout)
+	}, [form, setElements])
+
+	if (!isReady) {
+		return (
+			<div className="flex flex-col items-center w-full h-full">
+				<ImSpinner className="animate-spin h-12 w-12" />
+			</div>
+		)
+	}
+
+	// custom ui if the form is published
+	const shareURL = `${window.location.origin}/submit/${form.shareURL}`
+	if (form.published) {
+		return (
+			<>
+				<Confetti
+					width={window.innerWidth}
+					height={window.innerHeight}
+					numberOfPieces={1000}
+					recycle={false}
+				/>
+				<div className="flex flex-col items-center justify-center h-full w-full mt-10">
+					<div className="max-w-md">
+						<h1 className="text-center text-4xl font-bold text-primary border-b pb-2 mb-10">
+							🎉 🎉 Form Published 🎉🎉
+						</h1>
+						<h2 className="text-2xl">Share this form</h2>
+						<h3 className="text-xl text-muted-foreground border-b pb-10 ">
+							Anyone with the link can view and submit responses
+						</h3>
+						<div className="my-4 flex flex-col gap-2 items-center w-full border-b pb-4">
+							<Input
+								className="w-full"
+								readOnly
+								value={shareURL}
+							/>
+							<Button
+								className="mt-2 w-full"
+								onClick={() => {
+									navigator.clipboard.writeText(shareURL)
+									toast({
+										title: "Link Copied",
+										description:
+											"The link has been copied to your clipboard!",
+									})
+								}}>
+								Copy Link
+							</Button>
+						</div>
+						<div className="flex justify-between mb-10">
+							<Button
+								className="bg-background text-primary"
+								variant={"link"}>
+								<Link
+									href={"/"}
+									className="gap-2 flex items-center">
+									<BsArrowLeft />
+									Go back home
+								</Link>
+							</Button>
+							<Button
+								className="bg-background text-primary"
+								variant={"link"}>
+								<Link
+									href={`/forms/${form.id}`}
+									className="gap-2 flex items-center">
+									Form Details
+									<BsArrowRight />
+								</Link>
+							</Button>
+						</div>
+					</div>
+				</div>
+			</>
+		)
+	}
+
 	return (
 		<DndContext id="builder-dnd" sensors={sensors}>
 			<main className="flex flex-col w-full">
@@ -116,8 +203,8 @@ const FormBuilder = ({ form }: { form: Form }) => {
 						<PreviewDialogButton />
 						{!form.published && (
 							<>
-								<SaveFormButton />
-								<PublishFormButton />
+								<SaveFormButton id={form.id} />
+								<PublishFormButton id={form.id} />
 							</>
 						)}
 					</div>
