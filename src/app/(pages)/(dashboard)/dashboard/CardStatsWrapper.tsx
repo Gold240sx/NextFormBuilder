@@ -57,7 +57,7 @@ export function StatsCards(props: StatsCardProps) {
 	)
 }
 
-export function StatsCard({
+function StatsCard({
 	title,
 	value,
 	icon,
