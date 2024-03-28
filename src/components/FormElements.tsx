@@ -10,7 +10,7 @@ import { SpacerFieldFormElement } from "./fields/SpacerField"
 import { NumberFieldFormElement } from "./fields/NumberField"
 import { DateFieldFormElement } from "./fields/DateField"
 import { SelectFieldFormElement } from "./fields/SelectField"
-import { CheckBoxFieldFormElement } from "./fields/CheckboxField"
+import { CheckBoxFieldFormElement } from "./fields/CheckBoxField"
 
 export type ElementsType =
 	| "TextField"
