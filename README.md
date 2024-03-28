@@ -1,5 +1,7 @@
 # Form Builder
 
+Hosted at: next-form-builder-sable.vercel.app
+
 This is an app that allows me to create forms for various use cases quickly while retaining quality and flexibility.
 This app is started with the formBuilder application built by this tutorial: https://youtu.be/QGXUUXy0AMw?si=rgR4XbKqE51bCQef.
 
@@ -15,9 +17,9 @@ A significant amount of changes have been made to the video's tutorial, includin
 
 # Step 8: Beyond the tutorial
 
-Components I plan on including
+Figure out how to completely overhaul the clerk authentication system to allow for access to the home page without routing. I want to add a home page showing the features of the project as well.
 
--   Radio group, Stepper, TimePicker, and switch
+-   Additional components: Radio group, Stepper, TimePicker, and switch
 -   Date Picker was not working
 -   Couple Data as an attribute so that it can be read as a property in the code of the component...
 -   Figure out why the component isn't being shown in the code when the component properties are modified from the original.
