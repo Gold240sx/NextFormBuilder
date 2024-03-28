@@ -1,8 +1,33 @@
 import exp from "constants"
 import React, { FC, ReactElement } from "react"
 import { TextFieldFormElement } from "./fields/TextField"
+import { TextAreaFieldFormElement } from "./fields/TextAreaField"
+import { TitleFieldFormElement } from "./fields/TitleField"
+import { SubTitleFieldFormElement } from "./fields/SubTitleField"
+import { ParagraphFieldFormElement } from "./fields/ParagraphField"
+import { SeparatorFieldFormElement } from "./fields/SeperatorField"
+import { SpacerFieldFormElement } from "./fields/SpacerField"
+import { NumberFieldFormElement } from "./fields/NumberField"
+import { DateFieldFormElement } from "./fields/DateField"
+import { SelectFieldFormElement } from "./fields/SelectField"
+import { CheckBoxFieldFormElement } from "./fields/CheckboxField"
 
-export type ElementsType = "TextField"
+export type ElementsType =
+	| "TextField"
+	| "TextAreaField"
+	| "TitleField"
+	| "SubTitleField"
+	| "ParagraphField"
+	| "SeperatorField"
+	| "SpacerField"
+	| "NumberField"
+	| "DateField"
+	| "SelectField"
+	| "CheckBoxField"
+// | "RadioField"
+// | "SwitchField"
+// | "StepperField"
+
 export type SubmitFunction = (key: string, value: string) => void
 export type FormElement = {
 	type: ElementsType
@@ -41,4 +66,14 @@ export type FormElementInstance = {
 
 export const FormElements: FormElementsType = {
 	TextField: TextFieldFormElement,
+	TextAreaField: TextAreaFieldFormElement,
+	TitleField: TitleFieldFormElement,
+	SubTitleField: SubTitleFieldFormElement,
+	ParagraphField: ParagraphFieldFormElement,
+	SeperatorField: SeparatorFieldFormElement,
+	SpacerField: SpacerFieldFormElement,
+	NumberField: NumberFieldFormElement,
+	DateField: DateFieldFormElement,
+	SelectField: SelectFieldFormElement,
+	CheckBoxField: CheckBoxFieldFormElement,
 }

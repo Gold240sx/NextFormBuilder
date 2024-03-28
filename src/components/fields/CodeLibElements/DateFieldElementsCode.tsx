@@ -7,7 +7,7 @@ type CodeLibProps = {
 	dynamicCode: boolean
 }
 
-export const TextFieldElementsCode = ({
+export const DateFieldElementsCode = ({
 	element,
 	dynamicCode,
 }: CodeLibProps) => {

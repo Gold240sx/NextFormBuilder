@@ -30,7 +30,7 @@ import Confetti from "react-confetti"
 
 const FormBuilder = ({ form }: { form: Form }) => {
 	const [showPortal, setShowPortal] = useState<boolean>(false)
-	const { elements, setElements } = useDesigner()
+	const { elements, setElements, setSelectedElement } = useDesigner()
 	const [isReady, setIsReady] = useState<boolean>(false)
 	const [formattedCode, setFormattedCode] = useState<string>("")
 	const [dynamicCode, setDynamicCode] = useState<boolean>(false)
@@ -106,6 +106,7 @@ const FormBuilder = ({ form }: { form: Form }) => {
 		if (isReady) return
 		const elements = JSON.parse(form.content)
 		setElements(elements)
+		setSelectedElement(null)
 		const readyTimeout = setTimeout(() => setIsReady(true), 500)
 		return () => clearTimeout(readyTimeout)
 	}, [form, setElements])
@@ -187,7 +188,7 @@ const FormBuilder = ({ form }: { form: Form }) => {
 
 	return (
 		<DndContext id="builder-dnd" sensors={sensors}>
-			<main className="flex flex-col w-full">
+			<main className="flex flex-col w-full ">
 				<header className="flex justify-between border-b-2 p-4 gap-3 items-center">
 					<h2 className="truncate font-medium">
 						<span className="text-muted-foreground mr-2">

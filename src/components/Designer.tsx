@@ -150,7 +150,7 @@ function Designer() {
 
 					{droppable.isOver && elements.length === 0 && (
 						<div className="p-4 w-full">
-							<div className="h-[120px] rounded-md bg-primary/20"></div>
+							<div className="min-h-[120px] h-fit rounded-md bg-primary/20"></div>
 						</div>
 					)}
 					{elements.length > 0 && (
@@ -223,7 +223,7 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
 				selectedElement?.id === element.id
 					? "border-sky-400"
 					: "border-transparent"
-			} relative h-[120px] border-2 flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset`}>
+			} relative min-h-[120px] h-fit border-2 flex flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset`}>
 			<div
 				ref={topHalf.setNodeRef}
 				className="absolute w-full h-1/2 rounded-t-md"
@@ -241,6 +241,7 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
 							onClick={(e) => {
 								e.stopPropagation() // avoid selection of element while deleting
 								removeElement(element.id)
+								setSelectedElement(null)
 							}}>
 							<BiSolidTrash className="h-6 w-6" />
 						</Button>
@@ -257,7 +258,7 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
 			)}
 			<div
 				className={cn(
-					"flex w-full h-[120px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none opacity-100",
+					"flex w-full min-h-[120px] h-fit items-center rounded-md bg-accent/40 px-4 py-4 pointer-events-none opacity-100",
 					mouseIsOver && "opacity-30"
 				)}>
 				<DesignerElement elementInstance={element} />

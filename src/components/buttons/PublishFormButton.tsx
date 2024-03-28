@@ -13,7 +13,7 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Alert } from "../ui/alert"
-import { FaIcons } from "react-icons/fa"
+import { FaSpinner } from "react-icons/fa"
 import { toast } from "@/components/ui/use-toast"
 import { PublishForm } from "@/actions/form"
 import { useRouter } from "next/navigation"
@@ -70,7 +70,7 @@ const PublishFormButton = ({ id }: { id: number }) => {
 								startTransition(publishForm)
 							}}>
 							Proceed{" "}
-							{loading && <FaIcons className="animate-spin" />}
+							{loading && <FaSpinner className="animate-spin" />}
 						</AlertDialogAction>
 					</AlertDialogFooter>
 				</AlertDialogHeader>

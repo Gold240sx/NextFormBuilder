@@ -7,7 +7,7 @@ type CodeLibProps = {
 	dynamicCode: boolean
 }
 
-export const TextFieldElementsCode = ({
+export const NumberFieldElementsCode = ({
 	element,
 	dynamicCode,
 }: CodeLibProps) => {
@@ -30,7 +30,7 @@ export const TextFieldElementsCode = ({
 		${label}
 		${required ? "*" : ""}
 	</Label>
-	<Input readOnly disabled placeholder={placeHolder} />
+	<Input readOnly disabled type="number" placeholder={placeHolder} />
 	${
 		helperText
 			? `<p className="text-muted-foreground text-[0.8rem]">${helperText}</p>`
@@ -44,7 +44,7 @@ export const TextFieldElementsCode = ({
 		\${label}
 		\${required ? "*" : ""}
 	</Label>
-	<Input readOnly disabled placeholder={placeHolder} />
+	<Input readOnly disabled type="number" placeholder={placeHolder} />
 	${
 		helperText
 			? `<p className="text-muted-foreground text-[0.8rem]">${helperText}</p>`

@@ -13,6 +13,9 @@ import {
 } from "@/components/ui/table"
 import { formatDistance } from "date-fns"
 import CardStatsWrapper from "../../dashboard/CardStatsWrapper"
+import { Badge } from "@/components/ui/badge"
+import { format } from "date-fns"
+import { Checkbox } from "@/components/ui/checkbox"
 
 async function FormDetailsPage({
 	params,
@@ -62,8 +65,22 @@ async function FormDetailsPage({
 
 export default FormDetailsPage
 
+// custom rowcells for the date field and the checkbox field, otherwise, it just renders the value
 function RowCell({ type, value }: { type: ElementsType; value: string }) {
 	let node: ReactNode = value
+	switch (type) {
+		case "DateField":
+			if (!value) break
+			const date = new Date(value)
+			node = (
+				<Badge variant={"outline"}> {format(date, "dd/MM/yyy")}</Badge>
+			)
+			break
+		case "CheckBoxField":
+			const checked = value === "true"
+			node = <Checkbox checked={checked} disabled />
+			break
+	}
 	return <TableCell>{node}</TableCell>
 }
 
@@ -84,6 +101,14 @@ async function SubmissionsTable({ id }: { id: number }) {
 	formElements.forEach((element) => {
 		switch (element.type) {
 			case "TextField":
+			case "CheckBoxField":
+			case "DateField":
+			case "SelectField":
+			case "TextAreaField":
+			case "NumberField":
+				// case "RadioField": // shadcn
+				// case "SwitchField": // shadcn
+				// case "StepperField": // custom
 				columns.push({
 					id: element.id,
 					label: element.extraAttributes?.label,

@@ -33,6 +33,12 @@ const SidebarButtonElement = ({
 			isDraggableButtonElement: true,
 		},
 	})
+	const itemsArray = Array.from(tempItems[formElement.type]).map(
+		(item: ElementItem) => ({
+			label: item.label,
+			value: item.value,
+		})
+	)
 
 	return (
 		<div className="h-[120px] w-[120px] relative">
@@ -60,25 +66,21 @@ const SidebarButtonElement = ({
 							className="text-xs text-right  text-[#e7955e] bg-black/50 w-autol px-1 rounded-full">
 							{pickedVariant}
 						</p>
-						<DropdownMenuTrigger asChild>
-							<p
-								onClick={() => setShowPicker(!showPicker)}
-								className={`text-xs text-black text-center bg-white border-2 border-transparent hover:border-sky-600 w-[18px] h-[18px] items-center cursor-pointer rounded-full`}>
-								<AiOutlineDown
-									className={`mt-[2px] ml-[0.7px] cursor-pointer`}
-								/>
-							</p>
-							{/* <Button variant="outline">Variant</Button> */}
-						</DropdownMenuTrigger>
+						{itemsArray.length > 1 && (
+							<DropdownMenuTrigger asChild>
+								<p
+									onClick={() => setShowPicker(!showPicker)}
+									className={`text-xs text-black text-center bg-white border-2 border-transparent hover:border-sky-600 w-[18px] h-[18px] items-center cursor-pointer rounded-full`}>
+									<AiOutlineDown
+										className={`mt-[2px] ml-[0.7px] cursor-pointer`}
+									/>
+								</p>
+							</DropdownMenuTrigger>
+						)}
 					</div>
 
 					<VariantPicker
-						items={Array.from(tempItems[formElement.type]).map(
-							(item: ElementItem) => ({
-								label: item.label,
-								value: item.value,
-							})
-						)}
+						items={itemsArray}
 						pickedVariant={pickedVariant}
 						setPickedVariant={setPickedVariant}
 					/>
@@ -106,6 +108,12 @@ export const SidebarButtonDragOverlay = ({
 			isDraggableButtonElement: true,
 		},
 	})
+	const itemsArray = Array.from(tempItems[formElement.type]).map(
+		(item: ElementItem) => ({
+			label: item.label,
+			value: item.value,
+		})
+	)
 
 	return (
 		<Button
@@ -118,9 +126,11 @@ export const SidebarButtonDragOverlay = ({
 				<p className="text-xs  text-[#D37639] bg-black px-1 rounded-full">
 					{variant}
 				</p>
-				<p className="text-xs  text-black text-center bg-white px-0.5 cursor-pointer rounded-full">
-					<AiOutlineDown className="my-auto flex mt-[3px]" />
-				</p>
+				{itemsArray.length > 1 && (
+					<p className="text-xs  text-black text-center bg-white px-0.5 cursor-pointer rounded-full">
+						<AiOutlineDown className="my-auto flex mt-[3px]" />
+					</p>
+				)}
 			</div>
 		</Button>
 	)

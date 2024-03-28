@@ -7,15 +7,17 @@ type CodeLibProps = {
 	dynamicCode: boolean
 }
 
-export const TextFieldElementsCode = ({
+export const TextAreaFieldElementsCode = ({
 	element,
 	dynamicCode,
 }: CodeLibProps) => {
-	const { label, helperText, required, variant } =
+	const { label, helperText, required, variant, rows, placeHolder } =
 		element.extraAttributes as {
 			label: string
 			helperText: string
+			placeHolder: string
 			required: boolean
+			rows: number
 			variant: string
 		}
 	let code: string = ""
@@ -24,13 +26,13 @@ export const TextFieldElementsCode = ({
 	switch (variant) {
 		case "basic":
 			switch (dynamicCode) {
-				case false: // Dynamic
+				case false: // Static
 					code = `<div className="flex flex-col gap-2 w-full text-white">
 	<Label>
 		${label}
 		${required ? "*" : ""}
 	</Label>
-	<Input readOnly disabled placeholder={placeHolder} />
+	<Textarea rows={${rows}} placeholder="${placeHolder}" />
 	${
 		helperText
 			? `<p className="text-muted-foreground text-[0.8rem]">${helperText}</p>`
@@ -38,13 +40,13 @@ export const TextFieldElementsCode = ({
 	}
 </div>`
 					break
-				case true: // Static
+				case true: // Dynamic
 					;(code = `<div className="flex flex-col gap-2 w-full text-white">
 	<Label>
 		\${label}
 		\${required ? "*" : ""}
 	</Label>
-	<Input readOnly disabled placeholder={placeHolder} />
+	<Textarea rows={rows} placeholder={placeHolder} />
 	${
 		helperText
 			? `<p className="text-muted-foreground text-[0.8rem]">${helperText}</p>`
@@ -56,6 +58,7 @@ export const TextFieldElementsCode = ({
 							"Input",
 							"placeHolder",
 							"required",
+							"rows",
 							"helperText",
 						])
 					break

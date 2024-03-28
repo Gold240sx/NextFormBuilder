@@ -7,7 +7,7 @@ type CodeLibProps = {
 	dynamicCode: boolean
 }
 
-export const TextFieldElementsCode = ({
+export const SelectFieldElementsCode = ({
 	element,
 	dynamicCode,
 }: CodeLibProps) => {
@@ -63,44 +63,6 @@ export const TextFieldElementsCode = ({
 					code = ""
 					break
 			}
-			// case "floatingLabel":
-			// 	switch (dynamicCode) {
-			// 		case true: // Dynamic
-			// 			code = `
-			// 				<div className="flex flex-col gap-2 w-full text-white">
-			// 					<Label>
-			// 						${label}
-			// 						${required ? "*" : ""}
-			// 					</Label>
-			// 					<Input readOnly disabled placeholder={placeHolder} />
-			// 					${
-			// 						helperText
-			// 							? `<p className="text-muted-foreground text-[0.8rem]">${helperText}</p>`
-			// 							: ""
-			// 					}
-			// 				</div>
-			// 			`
-			// 			break
-			// 		case false: // Static
-			// 			code = `
-			// 				<div className="flex flex-col gap-2 w-full text-white">
-			// 					<Label>
-			// 						\${label}
-			// 						\${required ? "*" : ""}
-			// 					</Label>
-			// 					<Input readOnly disabled placeholder={placeHolder} />
-			// 					${
-			// 						helperText
-			// 							? `<p className="text-muted-foreground text-[0.8rem]">${helperText}</p>`
-			// 							: ""
-			// 					}
-			// 				</div>
-			// 			`
-			// 			break
-			// 		default:
-			// 			code = ""
-			// 			break
-			// 	}
 			return { code, imports }
 	}
 }

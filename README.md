@@ -3,6 +3,9 @@
 This is an app that allows me to create forms for various use cases quickly while retaining quality and flexibility.
 This app is started with the formBuilder application built by this tutorial: https://youtu.be/QGXUUXy0AMw?si=rgR4XbKqE51bCQef.
 
+This is by far one of the most challenging project I've worked on to date, requiring a lot of problem solving in order to get the app to behave with dependancy and framework differences. I've also made some
+UI tweaks to the app I felt were appropriate.
+
 ## My own additions
 
 A significant amount of changes have been made to the video's tutorial, including:
@@ -15,6 +18,7 @@ A significant amount of changes have been made to the video's tutorial, includin
 -   Next.js
 -   Clerk
 -   Prisma
+-   DNDKit
 -   PostgreSQL
 -   TailwindCSS
 -   React Hook Form
@@ -24,9 +28,10 @@ A significant amount of changes have been made to the video's tutorial, includin
 -   ShadCn
 -   Supabase
 -   Zod
+-   NextJS-Toploader
 -   React-Syntax-Highlighter
 
-<!-- video progress: 1:47:45 -->
+<!-- video progress: 3:47:45 -->
 
 https://youtu.be/QGXUUXy0AMw?si=3kO_ne7a0J-mBlXC&t=3849
 
