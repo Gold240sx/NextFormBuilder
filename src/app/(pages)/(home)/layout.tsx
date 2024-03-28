@@ -1,20 +1,15 @@
 import React, { ReactNode } from "react"
-import Logo from "@/components/Logo"
-import ThemeSwitcher from "@/components/ThemeSwitcher"
+import Navbar from "@/components/navbar"
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const HomeLayout = ({ children }: { children: ReactNode }) => {
 	return (
-		<div className="flex flex-col min-h-screen min-w-full bg-background max-h-screen">
-			<nav className="flex justify-between border-b items-center border-border h-[60px] px-4 py-2">
-				<Logo />
-				<div className="flex gap-4 items-center">
-					<ThemeSwitcher />
-					{/* <UserButton afterSignOutUrl="/signIn" /> */}
-				</div>
-			</nav>
-			<main className="flex w-full flex-grow"> {children}</main>
+		<div className="flex flex-col h-screen min-w-full bg-background">
+			<Navbar />
+			{/* <main className="flex items-center justify-center h-screen bg-green-400"> */}
+			{children}
+			{/* </main> */}
 		</div>
 	)
 }
 
-export default Layout
+export default HomeLayout
