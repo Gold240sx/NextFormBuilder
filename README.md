@@ -1,7 +1,7 @@
 # Form Builder
 
-Project File Path: CODE/Web/2024 Projects/form-builder <br/><br/>
-Hosted at: next-form-builder-sable.vercel.app <br/><br/>
+Project File Path: CODE/Web/2024 Projects/form-builder <br/>
+Hosted at: next-form-builder-sable.vercel.app <br/>
 Repo: https://github.com/Gold240sx/NextFormBuilder
 
 This is an app that allows me to create forms for various use cases quickly while retaining quality and flexibility.
