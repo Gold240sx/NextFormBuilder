@@ -5,7 +5,7 @@ Hosted at: next-form-builder-sable.vercel.app
 Repo: https://github.com/Gold240sx/NextFormBuilder
 
 This is an app that allows me to create forms for various use cases quickly while retaining quality and flexibility.
-This app is started with the formBuilder application built by this tutorial: https://youtu.be/QGXUUXy0AMw?si=rgR4XbKqE51bCQef.
+This app is based upon the formBuilder application built by this tutorial: https://youtu.be/QGXUUXy0AMw?si=rgR4XbKqE51bCQef.
 
 This is by far one of the most challenging project I've worked on to date, requiring a lot of problem solving in order to get the app to behave with the dependancy and framework version differences. I've also made some major additions to the project, such as a ViewCode Output button which outputs the code with both dynamic and static behaviors as well as made some
 UI tweaks to the app I felt were appropriate.
