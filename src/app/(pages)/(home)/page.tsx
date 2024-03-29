@@ -23,12 +23,20 @@ const Home: NextPage = async () => {
 				{/* <Header /> */}
 
 				{user && (
-					<Link
-						href="/dashboard"
-						className="text-primary hover:text-teal-400">
-						Go to Dashboard
-						<Button asChild>Go to Dashboard</Button>
-					</Link>
+					<>
+						<Link
+							href="/dashboard"
+							className="text-primary hover:text-teal-400">
+							Go to Dashboard
+							<Button asChild>Go to Dashboard</Button>
+						</Link>
+						<Link
+							href="/componentTester"
+							className="text-primary hover:text-teal-400">
+							Go to Component Tester
+							<Button asChild>Go to ComponentTester</Button>
+						</Link>
+					</>
 				)}
 				{!user && (
 					<Link

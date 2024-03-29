@@ -127,7 +127,7 @@ const FormComponent = ({
 }
 
 const propertiesSchema = z.object({
-	text: z.string().min(2).max(500),
+	label: z.string().min(2).max(500),
 	required: z.boolean().default(false),
 	helperText: z.string().max(200),
 	placeHolder: z.string().max(50),
@@ -184,7 +184,7 @@ function PropertiesComponent({
 		resolver: zodResolver(propertiesSchema),
 		mode: "onBlur",
 		defaultValues: {
-			text: element.extraAttributes.text,
+			label: element.extraAttributes.text,
 			required: element.extraAttributes.required,
 			placeHolder: element.extraAttributes.placeHolder,
 			helperText: element.extraAttributes.helperText,
@@ -196,12 +196,12 @@ function PropertiesComponent({
 	}, [element, form])
 
 	const applyChanges = (values: propertiesFormSchemaType) => {
-		const { text, required, placeHolder, helperText, rows } = values
+		const { label, required, placeHolder, helperText, rows } = values
 
 		updateElement(element.id, {
 			...element,
 			extraAttributes: {
-				text,
+				label,
 				required,
 				placeHolder,
 				helperText,
@@ -218,7 +218,7 @@ function PropertiesComponent({
 				className="space-y-3">
 				<FormField
 					control={form.control}
-					name="text"
+					name="label"
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Label</FormLabel>

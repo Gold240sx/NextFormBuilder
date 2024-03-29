@@ -1,7 +1,7 @@
 # Form Builder
 
-Project File Path: CODE/Web/2024 Projects/form-builder
-Hosted at: next-form-builder-sable.vercel.app
+Project File Path: CODE/Web/2024 Projects/form-builder <br/>
+Hosted at: next-form-builder-sable.vercel.app <br/>
 Repo: https://github.com/Gold240sx/NextFormBuilder
 
 This is an app that allows me to create forms for various use cases quickly while retaining quality and flexibility.
@@ -45,3 +45,23 @@ Figure out how to completely overhaul the clerk authentication system to allow f
 -   Zod
 -   NextJS-Toploader
 -   React-Syntax-Highlighter
+
+# To get started
+
+To initiate a develeopment server, run the following command:
+
+```bash
+npm run dev
+# or
+yarn dev
+bun dev
+```
+
+To initiate prisma studio, run the following command:
+
+```bash
+npx prisma studio
+# or
+yarn prisma studio
+bun prisma studio
+```

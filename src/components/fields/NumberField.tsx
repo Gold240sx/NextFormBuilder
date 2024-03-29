@@ -213,7 +213,6 @@ function PropertiesComponent({
 							<FormControl>
 								<Input
 									{...field}
-									type="number"
 									className="focus-visible:ring-sky-500 bg-white dark:bg-black/80"
 									onKeyDown={(e) => {
 										if (e.key === "Enter") {
