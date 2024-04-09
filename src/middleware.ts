@@ -11,7 +11,9 @@ export default authMiddleware({
   // privateRoutes: ["/dashboard, /builder, /builder/[Id]"],
   // Routes that can always be accessed, and have
   // no authentication information
-  // ignoredRoutes: ["/"],
+  ignoredRoutes: [
+    "/submit/33158a41-d272-42a5-9423-9165745bcd24",
+  ],
 });
 
 export const config = {
