@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 		<ClerkProvider>
 			<html lang="en" suppressHydrationWarning>
 				<head />
-				<body className="bg-background text-foreground">
+				<body className="bg-background text-foreground max-w-[100vw] min-h-[100vh]">
 					<NextTopLoader />
 					<DesignerContextProvider>
 						<ThemeProvider

@@ -138,39 +138,56 @@ async function SubmissionsTable({ id }: { id: number }) {
 
 	return (
 		<>
-			<h1 className="text-2xl font-bold my-4">Submissions</h1>
-			<Table>
-				<TableHeader>
-					<TableRow>
-						{columns.map((column) => (
-							<TableHead key={column.id} className="uppercase">
-								{column.label}
-							</TableHead>
-						))}
-						<TableHead className="text-muted-foreground text-right uppercase">
-							Submitted at:
-						</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody className="mb-10">
-					{rows.map((row, index) => (
-						<TableRow key={index}>
-							{columns.map((column) => (
-								<RowCell
-									key={column.id}
-									type={column.type}
-									value={row[column.id]}
-								/>
+			{rows.length > 0 && (
+				<>
+					<h1 className="text-2xl font-bold my-4">Submissions</h1>
+					<Table>
+						<TableHeader>
+							<TableRow>
+								{columns.map((column) => (
+									<TableHead
+										key={column.id}
+										className="uppercase overflow-ellipsis whitespace-nowrap">
+										{column.label}
+									</TableHead>
+								))}
+								<TableHead className="text-muted-foreground text-right uppercase">
+									Submitted at:
+								</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody className="mb-10">
+							{rows.map((row, index) => (
+								<TableRow key={index}>
+									{columns.map((column) => (
+										<RowCell
+											key={column.id}
+											type={column.type}
+											value={row[column.id]}
+										/>
+									))}
+									<TableCell className="text-right text-muted-foreground">
+										{formatDistance(
+											row.submittedAt,
+											new Date(),
+											{
+												addSuffix: true,
+											}
+										)}
+									</TableCell>
+								</TableRow>
 							))}
-							<TableCell className="text-right text-muted-foreground">
-								{formatDistance(row.submittedAt, new Date(), {
-									addSuffix: true,
-								})}
-							</TableCell>
-						</TableRow>
-					))}
-				</TableBody>
-			</Table>
+						</TableBody>
+					</Table>
+				</>
+			)}
+			{rows.length === 0 && (
+				<>
+					<h1 className="text-2xl font-bold my-4 text-zinc-500">
+						There has been no submissions yet
+					</h1>
+				</>
+			)}
 		</>
 	)
 }

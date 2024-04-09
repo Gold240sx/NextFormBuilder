@@ -5,7 +5,7 @@ import React, { ReactNode } from "react"
 
 function Layout({ children }: { children: ReactNode }) {
 	return (
-		<div className="flex flex-col min-h-screen min-w-full bg-background max-h-screen">
+		<div className="flex flex-col min-h-screen min-w-full bg-background max-h-screen max-w-full px-8">
 			<nav className="flex justify-between items-center border-b border-border h-[60px] px-4 py-2">
 				<Logo />
 				<div className="flex gap-4 items-center">
@@ -13,7 +13,9 @@ function Layout({ children }: { children: ReactNode }) {
 					<UserButton afterSignOutUrl="/sign-in" />
 				</div>
 			</nav>
-			<main className="flex w-full flex-grow">{children}</main>
+			<main className="flex w-full flex-grow pt-10 pb-24">
+				{children}
+			</main>
 		</div>
 	)
 }
